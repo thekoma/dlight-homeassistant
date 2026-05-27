@@ -114,3 +114,14 @@ class DlightClient:
             brightness=int(states.get("brightness", 0)),
             color_temp_kelvin=int(color.get("temperature", 0)),
         )
+
+    async def set_on(self, on: bool) -> None:
+        await self._execute("EXECUTE", [{"on": on}])
+
+    async def set_brightness(self, brightness: int) -> None:
+        brightness = max(1, min(100, brightness))
+        await self._execute("EXECUTE", [{"on": True, "brightness": brightness}])
+
+    async def set_temperature(self, kelvin: int) -> None:
+        kelvin = max(MIN_KELVIN, min(MAX_KELVIN, kelvin))
+        await self._execute("EXECUTE", [{"color": {"temperature": kelvin}}])

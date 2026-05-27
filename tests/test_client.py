@@ -30,3 +30,31 @@ async def test_query_state_sends_well_formed_request(fake_lamp):
     assert req["commandType"] == "QUERY_DEVICE_STATES"
     assert req["commands"] is None
     assert isinstance(req["commandId"], str)
+
+
+async def test_set_on_sends_boolean(fake_lamp):
+    client = DlightClient(fake_lamp.host, "0AeLoJZc", port=fake_lamp.port)
+    await client.set_on(False)
+    assert fake_lamp.received[-1]["commands"] == [{"on": False}]
+
+
+async def test_set_brightness_includes_on_true(fake_lamp):
+    client = DlightClient(fake_lamp.host, "0AeLoJZc", port=fake_lamp.port)
+    await client.set_brightness(50)
+    assert fake_lamp.received[-1]["commands"] == [{"on": True, "brightness": 50}]
+
+
+async def test_set_brightness_clamped_to_1_100(fake_lamp):
+    client = DlightClient(fake_lamp.host, "0AeLoJZc", port=fake_lamp.port)
+    await client.set_brightness(999)
+    assert fake_lamp.received[-1]["commands"][0]["brightness"] == 100
+    await client.set_brightness(0)
+    assert fake_lamp.received[-1]["commands"][0]["brightness"] == 1
+
+
+async def test_set_temperature_clamped_to_range(fake_lamp):
+    client = DlightClient(fake_lamp.host, "0AeLoJZc", port=fake_lamp.port)
+    await client.set_temperature(9000)
+    assert fake_lamp.received[-1]["commands"] == [{"color": {"temperature": 6000}}]
+    await client.set_temperature(1000)
+    assert fake_lamp.received[-1]["commands"] == [{"color": {"temperature": 2600}}]

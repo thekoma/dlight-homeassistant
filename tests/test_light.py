@@ -1,6 +1,8 @@
 """Tests for the dLight light entity."""
 from __future__ import annotations
 
+import pytest
+
 from homeassistant.components.light import (
     ATTR_BRIGHTNESS,
     ATTR_COLOR_TEMP_KELVIN,
@@ -13,6 +15,7 @@ from homeassistant.const import (
     SERVICE_TURN_ON,
 )
 from homeassistant.core import HomeAssistant
+from homeassistant.exceptions import HomeAssistantError
 from pytest_homeassistant_custom_component.common import MockConfigEntry
 
 from custom_components.dlight.const import CONF_DEVICE_ID, CONF_PORT, DOMAIN
@@ -73,3 +76,37 @@ async def test_turn_off(hass: HomeAssistant, fake_lamp):
     )
     execs = [r for r in fake_lamp.received if r["commandType"] == "EXECUTE"]
     assert execs[-1]["commands"] == [{"on": False}]
+
+
+async def test_entity_unavailable_on_coordinator_failure(hass: HomeAssistant, fake_lamp):
+    """Entity becomes unavailable when the coordinator can no longer reach the lamp."""
+    entity_id = await _setup(hass, fake_lamp)
+    # Confirm it starts healthy.
+    assert hass.states.get(entity_id).state == "on"
+
+    # Make the lamp return error responses.
+    fake_lamp.status = "ERROR"
+
+    # Trigger a coordinator refresh and wait for HA to process it.
+    entry = hass.config_entries.async_entries(DOMAIN)[0]
+    coordinator = entry.runtime_data
+    await coordinator.async_refresh()
+    await hass.async_block_till_done()
+
+    assert hass.states.get(entity_id).state == "unavailable"
+
+
+async def test_command_failure_raises_homeassistant_error(hass: HomeAssistant, fake_lamp):
+    """A lamp command error is surfaced as HomeAssistantError."""
+    entity_id = await _setup(hass, fake_lamp)
+
+    # Make the lamp fail all subsequent requests.
+    fake_lamp.status = "ERROR"
+
+    with pytest.raises(HomeAssistantError):
+        await hass.services.async_call(
+            LIGHT_DOMAIN,
+            SERVICE_TURN_ON,
+            {ATTR_ENTITY_ID: entity_id, ATTR_BRIGHTNESS: 128},
+            blocking=True,
+        )

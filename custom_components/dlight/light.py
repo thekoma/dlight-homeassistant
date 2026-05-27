@@ -12,12 +12,14 @@ from homeassistant.components.light import (
     LightEntity,
 )
 from homeassistant.core import HomeAssistant
-from homeassistant.helpers.device_registry import CONNECTION_NETWORK_MAC, DeviceInfo
+from homeassistant.exceptions import HomeAssistantError
+from homeassistant.helpers.device_registry import CONNECTION_NETWORK_MAC, DeviceInfo, format_mac
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
 from homeassistant.util.color import brightness_to_value, value_to_brightness
 
 from . import DlightConfigEntry
+from .client import DlightError
 from .const import (
     BRIGHTNESS_SCALE,
     CONF_DEVICE_ID,
@@ -61,7 +63,7 @@ class DlightLight(CoordinatorEntity[DlightCoordinator], LightEntity):
             model=info.model if info else None,
             sw_version=info.sw_version if info else None,
             hw_version=info.hw_version if info else None,
-            connections={(CONNECTION_NETWORK_MAC, mac)} if mac else set(),
+            connections={(CONNECTION_NETWORK_MAC, format_mac(mac))} if mac else set(),
         )
 
     @property
@@ -79,21 +81,25 @@ class DlightLight(CoordinatorEntity[DlightCoordinator], LightEntity):
     async def async_turn_on(self, **kwargs: Any) -> None:
         client = self.coordinator.client
         new = self.coordinator.data
-        if ATTR_BRIGHTNESS in kwargs:
-            value = math.ceil(brightness_to_value(BRIGHTNESS_SCALE, kwargs[ATTR_BRIGHTNESS]))
-            await client.set_brightness(value)
-            new = replace(new, on=True, brightness=value)
-        if ATTR_COLOR_TEMP_KELVIN in kwargs:
-            kelvin = max(MIN_KELVIN, min(MAX_KELVIN, kwargs[ATTR_COLOR_TEMP_KELVIN]))
-            await client.set_temperature(kelvin)
-            new = replace(new, color_temp_kelvin=kelvin)
-        if ATTR_BRIGHTNESS not in kwargs and ATTR_COLOR_TEMP_KELVIN not in kwargs:
-            await client.set_on(True)
-            new = replace(new, on=True)
+        try:
+            if ATTR_BRIGHTNESS in kwargs:
+                value = math.ceil(brightness_to_value(BRIGHTNESS_SCALE, kwargs[ATTR_BRIGHTNESS]))
+                await client.set_brightness(value)
+                new = replace(new, on=True, brightness=value)
+            if ATTR_COLOR_TEMP_KELVIN in kwargs:
+                kelvin = max(MIN_KELVIN, min(MAX_KELVIN, kwargs[ATTR_COLOR_TEMP_KELVIN]))
+                await client.set_temperature(kelvin)
+                new = replace(new, color_temp_kelvin=kelvin)
+            if ATTR_BRIGHTNESS not in kwargs and ATTR_COLOR_TEMP_KELVIN not in kwargs:
+                await client.set_on(True)
+                new = replace(new, on=True)
+        except DlightError as err:
+            raise HomeAssistantError(f"Failed to control dLight: {err}") from err
         self.coordinator.async_set_updated_data(new)  # optimistic
-        await self.coordinator.async_request_refresh()  # debounced confirm
 
     async def async_turn_off(self, **kwargs: Any) -> None:
-        await self.coordinator.client.set_on(False)
+        try:
+            await self.coordinator.client.set_on(False)
+        except DlightError as err:
+            raise HomeAssistantError(f"Failed to control dLight: {err}") from err
         self.coordinator.async_set_updated_data(replace(self.coordinator.data, on=False))
-        await self.coordinator.async_request_refresh()

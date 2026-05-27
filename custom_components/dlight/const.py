@@ -18,5 +18,4 @@ CONF_MAC = "mac"
 CONF_PORT = "port"
 CONF_SCAN_INTERVAL = "scan_interval"
 
-ZEROCONF_TYPE = "_ged7._tcp.local."
 GLAMP_PREFIX = "GLAMP_"

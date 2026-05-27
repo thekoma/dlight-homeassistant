@@ -58,3 +58,37 @@ async def test_set_temperature_clamped_to_range(fake_lamp):
     assert fake_lamp.received[-1]["commands"] == [{"color": {"temperature": 6000}}]
     await client.set_temperature(1000)
     assert fake_lamp.received[-1]["commands"] == [{"color": {"temperature": 2600}}]
+
+
+import asyncio
+
+from custom_components.dlight.client import (
+    DlightConnectionError,
+    DlightProtocolError,
+)
+
+
+async def test_connection_error_when_nothing_listening(socket_enabled):
+    client = DlightClient("127.0.0.1", "0AeLoJZc", port=1, timeout=2.0)
+    with pytest.raises(DlightConnectionError):
+        await client.query_state()
+
+
+async def test_non_success_status_raises(fake_lamp):
+    fake_lamp.status = "ERROR"
+    client = DlightClient(fake_lamp.host, "0AeLoJZc", port=fake_lamp.port)
+    with pytest.raises(DlightProtocolError):
+        await client.query_state()
+
+
+async def test_commands_are_serialized(fake_lamp):
+    """The lock must prevent overlapping connections to the one-connection lamp."""
+    fake_lamp.response_delay = 0.2
+    client = DlightClient(fake_lamp.host, "0AeLoJZc", port=fake_lamp.port)
+    await asyncio.gather(
+        client.query_state(),
+        client.query_state(),
+        client.set_on(True),
+    )
+    # If serialized, the fake server handled them one at a time without error.
+    assert len(fake_lamp.received) == 3

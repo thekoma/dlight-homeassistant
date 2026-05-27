@@ -65,7 +65,7 @@ class FakeLamp:
 
 
 @pytest.fixture
-async def fake_lamp():
+async def fake_lamp(socket_enabled):
     lamp = FakeLamp()
     await lamp.start()
     yield lamp

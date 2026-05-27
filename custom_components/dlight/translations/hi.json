@@ -1,0 +1,34 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "dLight जोड़ें",
+        "data": {
+          "host": "Host / IP",
+          "device_id": "डिवाइस आईडी"
+        }
+      },
+      "zeroconf_confirm": {
+        "title": "dLight मिली",
+        "description": "क्या आप {name} जोड़ना चाहते हैं?"
+      }
+    },
+    "error": {
+      "cannot_connect": "कनेक्ट करने में विफल"
+    },
+    "abort": {
+      "already_configured": "यह लैंप पहले से कॉन्फ़िगर है",
+      "cannot_connect": "कनेक्ट करने में विफल"
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "dLight विकल्प",
+        "data": {
+          "scan_interval": "पोलिंग अंतराल (सेकंड)"
+        }
+      }
+    }
+  }
+}

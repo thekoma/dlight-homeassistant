@@ -1,0 +1,34 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Lisää dLight",
+        "data": {
+          "host": "Host / IP",
+          "device_id": "Laitetunnus"
+        }
+      },
+      "zeroconf_confirm": {
+        "title": "dLight löydetty",
+        "description": "Haluatko lisätä laitteen {name}?"
+      }
+    },
+    "error": {
+      "cannot_connect": "Yhteys epäonnistui"
+    },
+    "abort": {
+      "already_configured": "Tämä lamppu on jo määritetty",
+      "cannot_connect": "Yhteys epäonnistui"
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "dLight-asetukset",
+        "data": {
+          "scan_interval": "Kyselyväli (sekuntia)"
+        }
+      }
+    }
+  }
+}

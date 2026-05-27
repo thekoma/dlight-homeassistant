@@ -1,0 +1,34 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "dLight を追加",
+        "data": {
+          "host": "Host / IP",
+          "device_id": "デバイス ID"
+        }
+      },
+      "zeroconf_confirm": {
+        "title": "dLight を検出しました",
+        "description": "{name} を追加しますか？"
+      }
+    },
+    "error": {
+      "cannot_connect": "接続に失敗しました"
+    },
+    "abort": {
+      "already_configured": "このランプは既に設定されています",
+      "cannot_connect": "接続に失敗しました"
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "dLight のオプション",
+        "data": {
+          "scan_interval": "ポーリング間隔（秒）"
+        }
+      }
+    }
+  }
+}

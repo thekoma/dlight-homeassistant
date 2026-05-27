@@ -1,0 +1,34 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "dLight hozzáadása",
+        "data": {
+          "host": "Host / IP",
+          "device_id": "Eszközazonosító"
+        }
+      },
+      "zeroconf_confirm": {
+        "title": "dLight észlelve",
+        "description": "Hozzáadja a következőt: {name}?"
+      }
+    },
+    "error": {
+      "cannot_connect": "A kapcsolódás sikertelen"
+    },
+    "abort": {
+      "already_configured": "Ez a lámpa már konfigurálva van",
+      "cannot_connect": "A kapcsolódás sikertelen"
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "dLight beállítások",
+        "data": {
+          "scan_interval": "Lekérdezési időköz (másodperc)"
+        }
+      }
+    }
+  }
+}

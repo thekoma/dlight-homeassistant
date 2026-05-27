@@ -1,0 +1,34 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Προσθήκη dLight",
+        "data": {
+          "host": "Host / IP",
+          "device_id": "Αναγνωριστικό συσκευής"
+        }
+      },
+      "zeroconf_confirm": {
+        "title": "Εντοπίστηκε dLight",
+        "description": "Θέλετε να προσθέσετε το {name};"
+      }
+    },
+    "error": {
+      "cannot_connect": "Η σύνδεση απέτυχε"
+    },
+    "abort": {
+      "already_configured": "Αυτή η λάμπα έχει ήδη ρυθμιστεί",
+      "cannot_connect": "Η σύνδεση απέτυχε"
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Επιλογές dLight",
+        "data": {
+          "scan_interval": "Διάστημα δημοσκόπησης (δευτερόλεπτα)"
+        }
+      }
+    }
+  }
+}

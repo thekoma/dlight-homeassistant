@@ -1,0 +1,34 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "dLight toevoegen",
+        "data": {
+          "host": "Host / IP",
+          "device_id": "Apparaat-ID"
+        }
+      },
+      "zeroconf_confirm": {
+        "title": "dLight ontdekt",
+        "description": "Wil je {name} toevoegen?"
+      }
+    },
+    "error": {
+      "cannot_connect": "Verbinding mislukt"
+    },
+    "abort": {
+      "already_configured": "Deze lamp is al geconfigureerd",
+      "cannot_connect": "Verbinding mislukt"
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "dLight-opties",
+        "data": {
+          "scan_interval": "Polling-interval (seconden)"
+        }
+      }
+    }
+  }
+}

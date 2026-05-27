@@ -1,0 +1,34 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "إضافة dLight",
+        "data": {
+          "host": "Host / IP",
+          "device_id": "معرّف الجهاز"
+        }
+      },
+      "zeroconf_confirm": {
+        "title": "تم اكتشاف dLight",
+        "description": "هل تريد إضافة {name}؟"
+      }
+    },
+    "error": {
+      "cannot_connect": "فشل الاتصال"
+    },
+    "abort": {
+      "already_configured": "هذا المصباح مُكوَّن بالفعل",
+      "cannot_connect": "فشل الاتصال"
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "خيارات dLight",
+        "data": {
+          "scan_interval": "فترة الاستقصاء (ثوانٍ)"
+        }
+      }
+    }
+  }
+}

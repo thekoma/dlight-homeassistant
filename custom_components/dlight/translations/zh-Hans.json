@@ -1,0 +1,34 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "添加 dLight",
+        "data": {
+          "host": "Host / IP",
+          "device_id": "设备 ID"
+        }
+      },
+      "zeroconf_confirm": {
+        "title": "发现 dLight",
+        "description": "要添加 {name} 吗？"
+      }
+    },
+    "error": {
+      "cannot_connect": "连接失败"
+    },
+    "abort": {
+      "already_configured": "此灯已配置",
+      "cannot_connect": "连接失败"
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "dLight 选项",
+        "data": {
+          "scan_interval": "轮询间隔（秒）"
+        }
+      }
+    }
+  }
+}

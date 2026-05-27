@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <radialGradient id="headGlow" cx="50%" cy="42%" r="62%">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="38%" stop-color="#FFF3CE"/>
+      <stop offset="72%" stop-color="#FFD274"/>
+      <stop offset="100%" stop-color="#FCC04A"/>
+    </radialGradient>
+    <radialGradient id="halo" cx="50%" cy="42%" r="60%">
+      <stop offset="0%" stop-color="#FFC65A" stop-opacity="0.55"/>
+      <stop offset="55%" stop-color="#FFC65A" stop-opacity="0.18"/>
+      <stop offset="100%" stop-color="#FFC65A" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="metal" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#6B7682"/>
+      <stop offset="100%" stop-color="#4C5560"/>
+    </linearGradient>
+  </defs>
+
+  <!-- emitted light halo -->
+  <rect x="76" y="28" width="360" height="224" rx="112" fill="url(#halo)"/>
+
+  <!-- disc base -->
+  <ellipse cx="256" cy="442" rx="95" ry="21" fill="url(#metal)"/>
+
+  <!-- stem -->
+  <rect x="244" y="190" width="24" height="256" rx="12" fill="url(#metal)"/>
+
+  <!-- glowing pill head -->
+  <rect x="116" y="64" width="280" height="150" rx="75" fill="url(#headGlow)"/>
+  <rect x="116" y="64" width="280" height="150" rx="75" fill="none" stroke="#F1AE36" stroke-opacity="0.35" stroke-width="3"/>
+</svg>

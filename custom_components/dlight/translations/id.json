@@ -1,0 +1,34 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Tambah dLight",
+        "data": {
+          "host": "Host / IP",
+          "device_id": "ID perangkat"
+        }
+      },
+      "zeroconf_confirm": {
+        "title": "dLight ditemukan",
+        "description": "Apakah Anda ingin menambahkan {name}?"
+      }
+    },
+    "error": {
+      "cannot_connect": "Gagal terhubung"
+    },
+    "abort": {
+      "already_configured": "Lampu ini sudah dikonfigurasi",
+      "cannot_connect": "Gagal terhubung"
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Opsi dLight",
+        "data": {
+          "scan_interval": "Interval polling (detik)"
+        }
+      }
+    }
+  }
+}

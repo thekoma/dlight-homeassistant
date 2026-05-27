@@ -1,0 +1,34 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Додати dLight",
+        "data": {
+          "host": "Host / IP",
+          "device_id": "Ідентифікатор пристрою"
+        }
+      },
+      "zeroconf_confirm": {
+        "title": "Виявлено dLight",
+        "description": "Бажаєте додати {name}?"
+      }
+    },
+    "error": {
+      "cannot_connect": "Не вдалося підключитися"
+    },
+    "abort": {
+      "already_configured": "Цю лампу вже налаштовано",
+      "cannot_connect": "Не вдалося підключитися"
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Параметри dLight",
+        "data": {
+          "scan_interval": "Інтервал опитування (секунди)"
+        }
+      }
+    }
+  }
+}

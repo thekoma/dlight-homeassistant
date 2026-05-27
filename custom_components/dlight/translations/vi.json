@@ -1,0 +1,34 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Thêm dLight",
+        "data": {
+          "host": "Host / IP",
+          "device_id": "ID thiết bị"
+        }
+      },
+      "zeroconf_confirm": {
+        "title": "Đã phát hiện dLight",
+        "description": "Bạn có muốn thêm {name} không?"
+      }
+    },
+    "error": {
+      "cannot_connect": "Kết nối thất bại"
+    },
+    "abort": {
+      "already_configured": "Đèn này đã được cấu hình",
+      "cannot_connect": "Kết nối thất bại"
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Tùy chọn dLight",
+        "data": {
+          "scan_interval": "Khoảng thời gian thăm dò (giây)"
+        }
+      }
+    }
+  }
+}

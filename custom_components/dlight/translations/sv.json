@@ -1,0 +1,34 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Lägg till dLight",
+        "data": {
+          "host": "Host / IP",
+          "device_id": "Enhets-ID"
+        }
+      },
+      "zeroconf_confirm": {
+        "title": "dLight hittad",
+        "description": "Vill du lägga till {name}?"
+      }
+    },
+    "error": {
+      "cannot_connect": "Anslutningen misslyckades"
+    },
+    "abort": {
+      "already_configured": "Den här lampan är redan konfigurerad",
+      "cannot_connect": "Anslutningen misslyckades"
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "dLight-alternativ",
+        "data": {
+          "scan_interval": "Pollningsintervall (sekunder)"
+        }
+      }
+    }
+  }
+}

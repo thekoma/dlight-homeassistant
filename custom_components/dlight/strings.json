@@ -1,0 +1,27 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Add dLight",
+        "data": { "host": "Host / IP", "device_id": "Device ID" }
+      },
+      "zeroconf_confirm": {
+        "title": "Discovered dLight",
+        "description": "Do you want to add {name}?"
+      }
+    },
+    "error": { "cannot_connect": "Failed to connect" },
+    "abort": {
+      "already_configured": "This lamp is already configured",
+      "cannot_connect": "Failed to connect"
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "dLight options",
+        "data": { "scan_interval": "Polling interval (seconds)" }
+      }
+    }
+  }
+}

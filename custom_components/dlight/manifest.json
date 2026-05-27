@@ -1,13 +1,13 @@
 {
   "domain": "dlight",
   "name": "Google dLight",
-  "version": "0.1.0",
+  "codeowners": ["@thekoma"],
   "config_flow": true,
   "documentation": "https://github.com/thekoma/dlight-homeassistant",
-  "issue_tracker": "https://github.com/thekoma/dlight-homeassistant/issues",
-  "codeowners": ["@thekoma"],
-  "iot_class": "local_polling",
   "integration_type": "device",
+  "iot_class": "local_polling",
+  "issue_tracker": "https://github.com/thekoma/dlight-homeassistant/issues",
   "requirements": [],
+  "version": "0.1.0",
   "zeroconf": [{ "type": "_ged7._tcp.local.", "name": "glamp*" }]
 }

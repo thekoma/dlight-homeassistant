@@ -1,7 +1,6 @@
 """Light platform for the dLight integration."""
 from __future__ import annotations
 
-import math
 from dataclasses import replace
 from typing import Any
 
@@ -83,7 +82,9 @@ class DlightLight(CoordinatorEntity[DlightCoordinator], LightEntity):
         new = self.coordinator.data
         try:
             if ATTR_BRIGHTNESS in kwargs:
-                value = math.ceil(brightness_to_value(BRIGHTNESS_SCALE, kwargs[ATTR_BRIGHTNESS]))
+                # Round, not ceil: HA has already rounded brightness_pct to 0-255, and rounding up
+                # again skipped 45 of the lamp's 100 levels (level 1 included).
+                value = max(1, round(brightness_to_value(BRIGHTNESS_SCALE, kwargs[ATTR_BRIGHTNESS])))
                 await client.set_brightness(value)
                 new = replace(new, on=True, brightness=value)
             if ATTR_COLOR_TEMP_KELVIN in kwargs:

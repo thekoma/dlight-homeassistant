@@ -5,6 +5,7 @@ import pytest
 
 from homeassistant.components.light import (
     ATTR_BRIGHTNESS,
+    ATTR_BRIGHTNESS_PCT,
     ATTR_COLOR_TEMP_KELVIN,
     DOMAIN as LIGHT_DOMAIN,
 )
@@ -56,6 +57,23 @@ async def test_turn_on_with_brightness(hass: HomeAssistant, fake_lamp):
     )
     execs = [r for r in fake_lamp.received if r["commandType"] == "EXECUTE"]
     assert execs[-1]["commands"][0]["brightness"] == 100  # HA 255 -> lamp 100
+
+
+async def test_brightness_pct_lands_on_the_same_lamp_level(hass: HomeAssistant, fake_lamp):
+    """Every percentage reaches its own lamp level, 1% included.
+
+    HA rounds brightness_pct to 0-255; rounding up again on the way back to 1-100
+    skipped 45 levels (1, 3, 5, ...), which made fades step unevenly.
+    """
+    entity_id = await _setup(hass, fake_lamp)
+    for pct in range(1, 101):
+        await hass.services.async_call(
+            LIGHT_DOMAIN, SERVICE_TURN_ON,
+            {ATTR_ENTITY_ID: entity_id, ATTR_BRIGHTNESS_PCT: pct},
+            blocking=True,
+        )
+        execs = [r for r in fake_lamp.received if r["commandType"] == "EXECUTE"]
+        assert execs[-1]["commands"][0]["brightness"] == pct
 
 
 async def test_turn_on_with_color_temp(hass: HomeAssistant, fake_lamp):
